@@ -56,6 +56,9 @@ public class PlayPoker {
                 System.out.println("\n"+person.getRoleName() + " starts to give the cards with" + pokerList.size()+" cards");
                 System.out.println("\n Now these are the pokers which he have\n");
                 printPoker(pokerList);
+                System.out.println("\n Now please input the cards which you want to give out \n");
+                System.out.println("\n If no cards can be given out please input \'no\' \n");
+
                 String cardInputString;//input the whole line of cards
                 //check the error, reads until all the input is right
                 int flag1 = 0;
@@ -64,11 +67,17 @@ public class PlayPoker {
                     flag1 = 0;
                     do {
                         cardInputString = sc.nextLine().replaceAll("\\s*", "");
+                        if (cardInputString.equals("no")) {
+                            flag1 = -1;
+                            flag2 = -1;
+                            break;
+                        }
                         flag1 = errorHandler(cardInputString, pokerList);
                         if (flag1==0) {
                             System.out.println("You have just input a poker which you don't have \n");
                         }
                     } while (flag1 == 0);
+                    if (flag2 != 0) { break;} //it means that means this round skips
                     //now generate the cards list
                     thisRoundCards = generateCards(cardInputString, pokerList);
                     Collections.sort(thisRoundCards);
@@ -82,6 +91,7 @@ public class PlayPoker {
 
                 }while (flag2 == 0);
                 //正常出牌
+                if ((flag2 == -1) && (flag1 == -1)) {continue;}
                 System.out.println("You have succeeded output all the cards\n");
                 lastRoundCards = thisRoundCards;
                 removeCards(thisRoundCards, pokerList);//remove all the cards in this player
