@@ -213,8 +213,8 @@ public class PlayPoker {
             }
         }
         //specially deal with the king and joker
-        Card joker = new Card("joker", 14);//joker is the small king
-        Card king = new Card("king", 15);
+        Card joker = new Card("s", 14);//s is the small king
+        Card king = new Card("b", 15);//b is the bigger king
         joker.setColor("5");
         king.setColor("5");
         list.add(joker);
