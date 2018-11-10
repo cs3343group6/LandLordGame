@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Player {
     private String roleName;//the name of the Player
-    private Integer roleType;//0 means the landlord,1 means the normal player
+    private int roleType;//0 means the landlord,1 means the normal player
     private List<Card> cardList;
 
     //construct function
@@ -17,10 +17,10 @@ public class Player {
         return roleType==Constant.LandLord?roleName+"(地主)":roleName;
     }
 
-    public Integer getRoletType() {
+    public int getRoletType() {
         return roleType;
     }
-    public void setRoletType(Integer roletType) {
+    public void setRoletType(int roletType) {
         this.roleType = roletType;
     }
     public List<Card> getPokerList() {

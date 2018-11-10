@@ -215,7 +215,7 @@ public class PlayPoker {
         Card poker = null;
         String [] pokerName = {"3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "1", "2"};
         String [] pokerColor = {"1", "2", "3", "4", "5"};//1,2,3,4 黑桃,红桃,梅花,方块 5大小王
-        for (int i = 0; i < pokerColor.length; i++) {
+        for (int i = 0; i < pokerColor.length-1; i++) {
             for (int j = 0; j < pokerName.length; j++) {
                 poker = new Card(pokerName[j],j);
                 poker.setColor(pokerColor[i]);

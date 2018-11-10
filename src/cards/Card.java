@@ -4,9 +4,9 @@ package cards;
 public class Card implements Comparable<Card>{
 
     private String color;// 1,2,3,4,5
-    //color=5 means jokers, color=6 means big king
-    private String name;//	A,2,3,4,5,6,7,8,9,10,J,Q,K,big king,joker
-    private int num;//the number of the card
+    //color=5 means joker or king
+    private String name;//	1,2,3,4,5,6,7,8,9,10,J,Q,K,14 (joker), 15(king)
+    private int num;//1,2,3,4,5,6,7,8,9,10,J,Q,K,s,b
     private boolean use;//use =false means has not been used
     public Card(String name,int number) {
         this.name = name;
@@ -47,7 +47,7 @@ public class Card implements Comparable<Card>{
     }
     @Override
     public int compareTo(Card o) {
-        return this.num - o.num;
+        return o.num - this.num;
     }
 
 
