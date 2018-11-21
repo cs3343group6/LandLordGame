@@ -66,7 +66,7 @@ public class PlayPoker {
                 do {
                     flag1 = 0;
                     do {
-                        cardInputString = sc.nextLine().replaceAll("\\s*", "");
+                        cardInputString = sc.nextLine();
                         if (cardInputString.equals("no")) {
                             flag1 = -1;
                             flag2 = -1;
@@ -119,11 +119,10 @@ public class PlayPoker {
                 }
     }
     public static int errorHandler(String s, List <Card> pokerList) {
-        String substring;
         //This function is for to detect which card has been inputted and actually not in the card's list
         int flag = 0; //flag marks if the String 1 means the pokerList contains the string
-        for (int j = 0; j < s.length(); j = j + 2) {
-            substring = s.substring(j, j+2);
+        String [] attr = s.split("\\s+");
+        for (String substring : attr) {
             for (int i = 0; i < pokerList.size(); i++) {
                 if (pokerList.get(i).readCompare(substring)) {
                     flag = 1;
@@ -136,11 +135,10 @@ public class PlayPoker {
     }
 
     public static List <Card> generateCards(String s, List <Card> pokerList) {
-        String substring;
         //This function is for to generate a list of cards
+        String [] attr = s.split("\\s+");
         List <Card> generateCardsList = new ArrayList<Card>();
-        for (int j = 0; j < s.length(); j = j + 2) {
-            substring = s.substring(j, j+2);
+        for (String substring : attr) {
             for (int i = 0; i < pokerList.size(); i++) {
                 if ((!pokerList.get(i).getUse())&&pokerList.get(i).readCompare(substring)) {
                     generateCardsList.add(pokerList.get(i));
