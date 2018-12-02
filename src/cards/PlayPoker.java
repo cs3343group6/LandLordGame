@@ -44,9 +44,9 @@ public class PlayPoker {
         Scanner sc = new Scanner(System.in);
         //是否结束
         boolean isEnd = false;
-        Player person = null;//玩家
-        List<Card> pokerList = null;//玩家的牌
-        List<Card> lastRoundCards = new ArrayList<Card>();//上一轮玩家的出牌
+        Player person = null;//player
+        List<Card> pokerList = null;//player's cards
+        List<Card> lastRoundCards = new ArrayList<Card>();//last round's cards
         List<Card> thisRoundCards = null;
 
         while (!isEnd) {
@@ -212,7 +212,7 @@ public class PlayPoker {
         List<Card> list = new ArrayList<Card>();
         Card poker = null;
         String [] pokerName = {"3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "1", "2"};
-        String [] pokerColor = {"1", "2", "3", "4", "5"};//1,2,3,4 黑桃,红桃,梅花,方块 5大小王
+        String [] pokerColor = {"1", "2", "3", "4", "5"};//1,2,3,4 5 big or small king
         for (int i = 0; i < pokerColor.length-1; i++) {
             for (int j = 0; j < pokerName.length; j++) {
                 poker = new Card(pokerName[j],j);
@@ -230,7 +230,6 @@ public class PlayPoker {
         return list;
     }
     public static void washPoker(List<Card> list){
-        //利用集合工具类，随机打乱顺序
         Collections.shuffle(list);
     }
 

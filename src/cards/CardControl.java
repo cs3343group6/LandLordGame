@@ -11,7 +11,7 @@ public class CardControl {
 
     //得到最大相同数
     public static void getMax(Card_index card_index,List<Card> list){
-        int count[]=new int[14];//1-13各算一种,王算第14种
+        int count[]=new int[14];
         for(int i=0;i<14;i++)
             count[i]=0;
         for(int i=0,len=list.size();i<len;i++){
@@ -38,14 +38,7 @@ public class CardControl {
             }
         }
     }
-    //隐藏之前出过的牌
-	/*
-	public static void hideCards(List<Card> list){
-		for(int i=0,len=list.size();i<len;i++){
-			list.get(i).setVisible(false);
-		}
-	}*/
-    //检查牌的是否能出
+
     public static int checkCards(List<Card> c,List<Card> lastRound){
         //compare between this round and lastround
         CardType cType = CardControl.judgeType(c);
@@ -62,7 +55,7 @@ public class CardControl {
             return 0;
         }
         //now it's the same size, and check the level
-        //王炸弹
+        //king bomb
         if(cType==CardType.c4)
         {
             if(c.size()==2)
@@ -70,7 +63,6 @@ public class CardControl {
             if(lastRound.size()==2)
                 return 0;
         }
-        //单牌,对子,3带,4炸弹
         if(cType==CardType.c1||cType==CardType.c2||cType==CardType.c3||cType==CardType.c4){
             if(c.get(0).getNum()<=(lastRound.get(0).getNum()))
             {
@@ -79,7 +71,6 @@ public class CardControl {
                 return 1;
             }
         }
-        //顺子,连队，飞机裸
         if(cType==CardType.c123||cType==CardType.c1122||cType==CardType.c111222)
         {
             if(c.get(0).getNum()<=lastRound.get(0).getNum())
@@ -87,18 +78,16 @@ public class CardControl {
             else
                 return 1;
         }
-        //按重复多少排序
-        //3带1,3带2 ,飞机带单，双,4带1,2,只需比较第一个就行，独一无二的
+
         if(cType==CardType.c31||cType==CardType.c32||cType==CardType.c411||cType==CardType.c422
                 ||cType==CardType.c11122234||cType==CardType.c1112223344){
-            List<Card> a1=CardControl.getOrder2(c); //我出的牌
-            List<Card> a2=CardControl.getOrder2(lastRound);//当前最大牌
+            List<Card> a1=CardControl.getOrder2(c);
+            List<Card> a2=CardControl.getOrder2(lastRound);
             if(a1.get(0).getNum()<a2.get(0).getNum())
                 return 0;
         }
         return 1;
     }
-    //按照重复次数排序
     public static List getOrder2(List<Card> list){
         List<Card> list2=new ArrayList<Card>(list);
         List<Card> list3=new ArrayList<Card>();
@@ -137,9 +126,9 @@ public class CardControl {
     public static  CardType judgeType(List<Card> list) {
         Collections.sort(list);
         int len=list.size();
-        //单牌,对子，3不带，4个一样炸弹
+
         if(len<=4)
-        {	//如果第一个和最后个相同，说明全部相同
+        {
             if(list.size()>0&&list.get(0).getNum()==list.get(len-1).getNum())
             {
                 switch (len) {
@@ -153,10 +142,10 @@ public class CardControl {
                         return CardType.c4;
                 }
             }
-            //双王,化为炸弹返回
+
             if(len==2&&list.get(1).getColor().equals("5"))
                 return CardType.c4;
-            //当第一个和最后个不同时,3带1
+
             if((len==4) &&((list.get(0).getNum()==list.get(len-2).getNum())||
                     list.get(1).getNum()==list.get(len-1).getNum()))
                 return CardType.c31;
@@ -164,40 +153,32 @@ public class CardControl {
                 return CardType.c0;
             }
         }
-        //当5张以上时，连字，3带2，飞机，2顺，4带2等等
+
         if(len>=5)
-        {//现在按相同数字最大出现次数
+        {
             Card_index card_index=new Card_index();
             for(int i=0;i<4;i++)
                 card_index.a[i]=new ArrayList<Integer>();
-            //求出各种数字出现频率
-            CardControl.getMax(card_index,list); //a[0,1,2,3]分别表示重复1,2,3,4次的牌
-            //3带2 -----必含重复3次的牌
+
+            CardControl.getMax(card_index,list);
             if(card_index.a[2].size()==1 &&card_index.a[1].size()==1 && len==5)
                 return CardType.c32;
-            //4带2(单,双)
             if(card_index.a[3].size()==1 && len==6)
                 return CardType.c411;
             if(card_index.a[3].size()==1 && card_index.a[1].size()==2 &&len==8)
                 return CardType.c422;
-            //单连,保证不存在王
             if((!list.get(0).getColor().equals("5"))&&(card_index.a[0].size()==len) &&
                     ((list.get(0).getNum()-list.get(len-1).getNum())==len-1))
                 return CardType.c123;
-            //连队
             if(card_index.a[1].size()==len/2 && len%2==0 && len/2>=3
                     &&((list.get(0).getNum()-list.get(len-1).getNum())==(len/2-1)))
                 return CardType.c1122;
-            //飞机
             if(card_index.a[2].size()==len/3 && (len%3==0) &&
                     ((list.get(0).getNum()-list.get(len-1).getNum())==(len/3-1)))
                 return CardType.c111222;
-            //飞机带n单,n/2对
             if(card_index.a[2].size()==len/4 && (len%4==0) &&
                     ((Integer)(card_index.a[2].get(len/4-1))-(Integer)(card_index.a[2].get(0))==len/4-1))
                 return CardType.c11122234;
-
-            //飞机带n双
             if(card_index.a[2].size()==len/5 && (len%5==0) && card_index.a[1].size()==len/5 &&
                     ((Integer)(card_index.a[2].get(len/5-1))-(Integer)(card_index.a[2].get(0))==len/5-1))
                 return CardType.c1112223344;
@@ -209,5 +190,5 @@ public class CardControl {
 
 }
 class Card_index{
-    List a[]=new ArrayList[4];//单张
+    List a[]=new ArrayList[4];
 }
