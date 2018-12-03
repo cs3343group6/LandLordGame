@@ -48,7 +48,7 @@ public class PlayPoker {
         List<Card> pokerList = null;//player's cards
         List<Card> lastRoundCards = new ArrayList<Card>();//last round's cards
         List<Card> thisRoundCards = null;
-
+        int lastRoundPlayer = 0;
         while (!isEnd) {
             for (int i = 0; i < personList.size(); i++) {
                 person = personList.get(i);
@@ -83,7 +83,13 @@ public class PlayPoker {
                     Collections.sort(thisRoundCards);
                     System.out.println("These are the cards you want to output\n");
                     printPoker(thisRoundCards);
-                    flag2 = CardControl.checkCards(thisRoundCards, lastRoundCards);
+                    if (lastRoundPlayer == i) {
+                        flag2 = 1;
+                    }
+                    else {
+                        flag2 = CardControl.checkCards(thisRoundCards, lastRoundCards);
+                    }
+
                     if (flag2 == 0) {
                         System.out.println("Your card is smaller\n");
                     }
@@ -94,6 +100,7 @@ public class PlayPoker {
                 if ((flag2 == -1) && (flag1 == -1)) {continue;}
                 System.out.println("You have succeeded output all the cards\n");
                 lastRoundCards = thisRoundCards;
+                lastRoundPlayer = i;
                 removeCards(thisRoundCards, pokerList);//remove all the cards in this player
                 System.out.println("Now is the cards which you left\n");
                 printPoker(pokerList);
