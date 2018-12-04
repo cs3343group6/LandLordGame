@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="LandLordGame:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/LandLordGame_jar</output-path>
+    <root id="archive" name="LandLordGame.jar">
+      <element id="module-output" name="LandLordGame" />
+    </root>
+  </artifact>
+</component>
